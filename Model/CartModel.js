@@ -10,6 +10,6 @@ const CartSchema = new Schema(
     }
 )
 
-const CartModel = model("CartModel", CartSchema)
+const Cart = model("Cart", CartSchema)
 
-export default CartModel
+export default Cart

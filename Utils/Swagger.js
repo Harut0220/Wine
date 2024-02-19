@@ -56,6 +56,27 @@ export const options = {
         },
       },
       schemas: {
+        Signup: {
+          type: "object",
+          properties: {
+            email: { type: "string", description: "required" },
+            password: { type: "string", description: "required" },
+          },
+        },
+        Signin: {
+          type: "object",
+          properties: {
+            email: { type: "string", description: "required" },
+            password: { type: "string", description: "required" },
+          },
+        },
+        RefreshToken:{
+          type:"object",
+          properties:{
+            userId: { type: "string", description: "required" },
+            token: { type: "string", description: "required" },
+          }
+        },
         Wine: {
           type: "object",
           properties: {
@@ -81,7 +102,21 @@ export const options = {
           },
         },
       },
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          name: "Authorization",
+          scheme: "bearer",
+          in: "header",
+          // bearerFormat: "JWT",
+        },
+      },
     },
+    security: [
+      {
+        bearerAuth: [],
+      },
+    ],
   },
   apis: ["./Router/*.js"],
 };

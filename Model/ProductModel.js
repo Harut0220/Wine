@@ -1,6 +1,6 @@
 import { Schema, model } from "mongoose";
 
-const productSchema = new Schema({
+const ProductSchema = new Schema({
     brand:{type:String},
     name:{type:String},
     type: { type: String },
@@ -21,6 +21,6 @@ const productSchema = new Schema({
         timestamps: true,
     })
 
- const ProductModel = model("ProductModel", productSchema)
+ const Product = model("Product", ProductSchema)
 
-export default ProductModel
+export default Product

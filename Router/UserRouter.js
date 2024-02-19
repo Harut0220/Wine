@@ -1,7 +1,6 @@
 import express, { Router } from "express";
 import userController from "../Controller/userController.js";
-import UserModel from "../Model/UserModel.js";
-import data from "../Data/Data.js";
+
 
 const userRouter=Router()
 
@@ -38,7 +37,7 @@ const userRouter=Router()
  *              contents:
  *                  application/json:
  *                      schema:
- *                          $ref:"#/component/schemas/signup"
+ *                          $ref:"#/component/schemas/Signup"
  *
  */
 
@@ -70,7 +69,7 @@ userRouter.post("/signup",userController.signUp)
  *              contents:
  *                  application/json:
  *                      schema:
- *                          $ref:"#/component/schemas/signin"
+ *                          $ref:"#/component/schemas/Signin"
  *
  */
 
@@ -94,18 +93,6 @@ userRouter.post("/signin",userController.signIn)
  */
 
 userRouter.post("/signout",userController.signOut)
-// userRouter.get("/usersseed", async (req, res) => {
-//     try {
-      
-//         await UserModel.deleteMany({})
 
-    
-//         const seededUser = await UserModel.insertMany(data.users)
-//         console.log(seededUser);
-//         res.status(200).send(seededUser)
-//     } catch (error) {
-//         console.error(error);
-//     }
-// })
 
 export default userRouter

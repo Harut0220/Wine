@@ -1,11 +1,11 @@
-import ProductModel from "../Model/ProductModel.js";
+import Product from "../Model/ProductModel.js";
 
 const productService = {
   getAll: async (type, brand, rating, priceMin, priceMax) => {
     
     try {
       if (type && brand && rating) {
-        const products = await ProductModel.find({
+        const products = await Product.find({
           type: type,
           brand: brand,
           rating: rating,
@@ -31,7 +31,7 @@ const productService = {
 
         //type ev brand mekakan
         if (brandSearch === -1 && typeSearch === -1) {
-          const product = await ProductModel.find({ type: type, brand: brand });
+          const product = await Product.find({ type: type, brand: brand });
 
           if (priceMax) {
             result = product.filter((prod) => {
@@ -47,7 +47,7 @@ const productService = {
         //type shat lineluc
         if (brandSearch === -1 && typeSearch !== -1) {
           for (let i = 0; i < typeArray.length; i++) {
-            const products = await ProductModel.find({
+            const products = await Product.find({
               type: typeArray[i],
               brand: brand,
             });
@@ -71,7 +71,7 @@ const productService = {
         //brand shat lineluc
         if (typeSearch === -1 && brandSearch !== -1) {
           for (let i = 0; i < brandArray.length; i++) {
-            const products = await ProductModel.find({
+            const products = await Product.find({
               brand: brandArray[i],
               type: type,
             });
@@ -99,7 +99,7 @@ const productService = {
           //brand aveli mec qan type
           if (brandArray.length > typeArray.length) {
             for (let i = 0; i < brandArray.length; i++) {
-              const products = await ProductModel.find({
+              const products = await Product.find({
                 brand: brandArray[i],
               });
 
@@ -128,7 +128,7 @@ const productService = {
         //type aveli mec qan brand
         if (typeArray.length > brandArray.length) {
           for (let i = 0; i < typeArray.length; i++) {
-            const products = await ProductModel.find({
+            const products = await Product.find({
               type: typeArray[i],
             });
 
@@ -156,7 +156,7 @@ const productService = {
         //brand u type havasar en
         if (typeArray.length === brandArray.length) {
           for (let i = 0; i < typeArray.length; i++) {
-            const products = await ProductModel.find({ type: typeArray[i] });
+            const products = await Product.find({ type: typeArray[i] });
             resArray = products.concat(resArray);
           }
           for (let i = 0; i < brandArray.length; i++) {
@@ -182,7 +182,7 @@ const productService = {
         // if(typeSearch!==-1&&typeArray.length>brandArray.length){
 
         //   for(let i=0;i<typeArray.length;i++){
-        //     const products=await ProductModel.find({type:typeArray[i]})
+        //     const products=await Product.find({type:typeArray[i]})
         //     const filterdata=brandArray.map((pro)=>{
         //       return products.filter((product)=>{
         //       return product.brand===pro
@@ -195,7 +195,7 @@ const productService = {
         // }
       }
       if (brand && rating) {
-        const products = await ProductModel.find({
+        const products = await Product.find({
           brand: brand,
           rating: rating,
         });
@@ -209,7 +209,7 @@ const productService = {
         }
       }
       if (type && rating) {
-        const products = await ProductModel.find({
+        const products = await Product.find({
           type: type,
           rating: rating,
         });
@@ -223,15 +223,15 @@ const productService = {
         }
       }
 
-      if (brand && !type) {
+      if (brand) {
         let productArray = [];
         let result;
-
+        // console.log(brand);
         const indexSearch = brand.search(",");
         if (indexSearch !== -1) {
           const brandArray = brand.split(",");
           for (let i = 0; i < brandArray.length; i++) {
-            const products = await ProductModel.find({ brand: brandArray[i] });
+            const products = await Product.find({ brand: brandArray[i] });
 
             productArray.push(products);
           }
@@ -240,7 +240,7 @@ const productService = {
             result = productArray[i].concat(result);
           }
         } else {
-          const products = await ProductModel.find({ brand: brand });
+          const products = await Product.find({ brand: brand });
           if (priceMax) {
             const resultat = products.filter((prod) => {
               return prod.price <= priceMax && prod.price >= priceMin;
@@ -264,7 +264,7 @@ const productService = {
       if (type && !brand) {
         const typeSearch = type.search(",");
         if (typeSearch === -1) {
-          const products = await ProductModel.find({ type: type });
+          const products = await Product.find({ type: type });
           if (priceMax) {
             const resultat = products.filter((prod) => {
               return prod.price <= price;
@@ -277,7 +277,7 @@ const productService = {
           let result;
           const typeArray = type.split(",");
           for (let i = 0; i < typeArray.length; i++) {
-            const products = await ProductModel.find({ type: typeArray[i] });
+            const products = await Product.find({ type: typeArray[i] });
             result = products.concat(result);
           }
           result.pop();
@@ -292,7 +292,7 @@ const productService = {
         }
       }
       if (rating && !brand) {
-        const products = await ProductModel.find({ rating: rating });
+        const products = await Product.find({ rating: rating });
         if (priceMax) {
           const resultat = products.filter((prod) => {
             return prod.price <= priceMax && prod.price >= priceMin;

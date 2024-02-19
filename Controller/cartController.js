@@ -1,6 +1,3 @@
-// import { cartProduct } from "../Data/cart.js";
-import CartModel from "../Model/CartModel.js";
-import ProductModel from "../Model/ProductModel.js";
 import cartService from "../Service/CartService.js";
 
 const cartController = {
@@ -10,7 +7,7 @@ const cartController = {
 
       res.status(200).send(Cart);
     } catch (error) {
-      console.error("hfhkhg");
+      console.error("CartError");
     }
   },
   addToCart: async (req, res) => {

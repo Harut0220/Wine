@@ -1,6 +1,6 @@
 import jwt from "jsonwebtoken"
 
-const generateToken = (user) => {
+export const generateAccessToken = (user) => {
     const payload = {
         _id: user._id,
         email: user.email,
@@ -8,7 +8,7 @@ const generateToken = (user) => {
     }
 
     try {
-        const token = jwt.sign(payload, process.env.SECRET, {
+        const token = jwt.sign(payload, process.env.ACCESS_TOKEN, {
             expiresIn: "5m"
         })
 
@@ -18,4 +18,19 @@ const generateToken = (user) => {
     }
 }
 
-export default generateToken
+export const generateRefreshToken = (user) => {
+    const payload = {
+      _id: user._id,
+      email: user.email,
+    };
+  
+    try {
+      const token = jwt.sign(payload, process.env.REFRESH_TOKEN, {
+        expiresIn: "5m",
+      });
+  
+      return token;
+    } catch (error) {
+      throw new Error("Token generate error", error.message);
+    }
+  };

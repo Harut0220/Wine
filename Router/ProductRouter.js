@@ -1,7 +1,8 @@
 import express, { Router } from "express";
 import productController from "../Controller/productController.js";
-import ProductModel from "../Model/ProductModel.js";
+import Product from "../Model/ProductModel.js";
 import data from "../Data/Data.js";
+import isAuth from "../Middleware/IsAuth.js";
 
 const productRouter = Router();
 
@@ -19,6 +20,13 @@ const productRouter = Router();
  *    get:
  *      summary: Wine
  *      tags: [Wines]
+ *      description: Returns a hello message.
+ *      parameters:
+ *       - in: path
+ *         name: Query Filter
+ *         type: string
+ *         required: true
+ *         description: Query
  *      responses:
  *        200:
  *          description: Success
@@ -28,7 +36,7 @@ const productRouter = Router();
  *                $ref: "#/components/schemas/Wine"
  */
 
-productRouter.get("/", productController.getAll);
+productRouter.get("/product", productController.getAll);
 
 /**
  * @swagger
@@ -49,9 +57,9 @@ productRouter.get("/", productController.getAll);
 
 productRouter.get("/seed", async (req, res) => {
   try {
-    await ProductModel.deleteMany({});
+    await Product.deleteMany({});
 
-    const seededProduct = await ProductModel.insertMany(data.products);
+    const seededProduct = await Product.insertMany(data.products);
 
     res.status(200).send(seededProduct);
   } catch (error) {

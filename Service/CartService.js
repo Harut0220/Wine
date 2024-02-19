@@ -1,10 +1,9 @@
-import CartModel from "../Model/CartModel.js";
-import ProductModel from "../Model/ProductModel.js";
+import Cart from "../Model/CartModel.js";
 
 const cartService = {
   getAll: async () => {
     try {
-      const CartProducts = await CartModel.find().populate("productId");
+      const CartProducts = await Cart.find().populate("productId");
       return CartProducts;
     } catch (error) {
       console.error("errr");
@@ -12,7 +11,7 @@ const cartService = {
   },
   addToCart: async (id) => {
     try {
-      const cartExist = await CartModel.findOne({ productId: id }).populate(
+      const cartExist = await Cart.findOne({ productId: id }).populate(
         "productId"
       );
 
@@ -22,7 +21,7 @@ const cartService = {
         await cartExist.save();
         return cartExist;
       } else {
-        const newCart = new CartModel({
+        const newCart = new Cart({
           productId: id,
         });
         await newCart.save();

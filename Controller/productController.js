@@ -4,7 +4,6 @@ const productController = {
   getAll: async (req, res) => {
     try {
       const { type, brand, rating, pricemax, pricemin } = req.query;
-      // console.log(type, brand, rating, pricemax, pricemin );
       const b = [];
       const ratingString = Number(rating);
       const priceNumberMax = Number(pricemax);
@@ -17,6 +16,7 @@ const productController = {
         priceNumberMax
       );
       // console.log(filtrData);
+
       if (filtrData[0] === undefined) {
         res.status(200).send({ message: "Product Not Found" });
       }
