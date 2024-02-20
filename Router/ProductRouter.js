@@ -6,7 +6,6 @@ import isAuth from "../Middleware/IsAuth.js";
 
 const productRouter = Router();
 
-
 /**
  * @swagger
  * tags:
@@ -20,13 +19,37 @@ const productRouter = Router();
  *    get:
  *      summary: Wine
  *      tags: [Wines]
- *      description: Returns a hello message.
  *      parameters:
- *       - in: path
- *         name: Query Filter
- *         type: string
- *         required: true
- *         description: Query
+ *        - in: query
+ *          name: brand
+ *          type: array
+ *          collectionFormat: csv
+ *          items:
+ *            type: object
+ *        - in: query
+ *          name: type
+ *          type: array
+ *          collectionFormat: csv
+ *          items:
+ *            type: object
+ *        - in: query
+ *          name: pricemin
+ *          type: number
+ *          collectionFormat: csv
+ *          items:
+ *            type: object
+ *        - in: query
+ *          name: pricemax
+ *          type: number
+ *          collectionFormat: csv
+ *          items:
+ *            type: object
+ *        - in: query
+ *          name: rating
+ *          type: array
+ *          collectionFormat: csv
+ *          items:
+ *            type: object
  *      responses:
  *        200:
  *          description: Success
@@ -36,7 +59,7 @@ const productRouter = Router();
  *                $ref: "#/components/schemas/Wine"
  */
 
-productRouter.get("/product", productController.getAll);
+productRouter.get("/", productController.getAll);
 
 /**
  * @swagger
@@ -52,8 +75,6 @@ productRouter.get("/product", productController.getAll);
  *              schema:
  *                $ref: "#/components/schemas/Wine"
  */
-
-
 
 productRouter.get("/seed", async (req, res) => {
   try {

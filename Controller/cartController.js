@@ -20,5 +20,16 @@ const cartController = {
       res.status(500).send({ message: "Internal server error" });
     }
   },
+  subToCart:async (req,res)=>{
+    try {
+      const {id}=req.params 
+    
+    const addedProduct = await cartService.subToCart(id);
+    res.status(200).send(addedProduct);
+    } catch (error) {
+      res.status(500).send({ message: "Internal server error" });
+    }
+    
+  }
 };
 export default cartController;

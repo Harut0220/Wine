@@ -1,9 +1,8 @@
 import express, { Router } from "express";
 import userController from "../Controller/userController.js";
+import isAuth from "../Middleware/IsAuth.js";
 
-
-const userRouter=Router()
-
+const userRouter = Router();
 
 /**
  * @swagger
@@ -41,8 +40,7 @@ const userRouter=Router()
  *
  */
 
-
-userRouter.post("/signup",userController.signUp)
+userRouter.post("/signup", userController.signUp);
 
 /**
  * @swagger
@@ -73,15 +71,52 @@ userRouter.post("/signup",userController.signUp)
  *
  */
 
-
-userRouter.post("/signin",userController.signIn)
+userRouter.post("/signin", userController.signIn);
 
 /**
  * @swagger
- *  /api/auth/logout:
+ *  /api/auth/refresh:
+ *   post:
+ *      summary: User Refresh
+ *      tags: [Auth]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                  refreshToken:
+ *                      type: string
+ *                      format: token
+ *      responses:
+ *          200:
+ *              description: Success
+ *              contents:
+ *                  application/json:
+ *                      schema:
+ *                          $ref:"#/component/schemas/refreshToken"
+ *
+ */
+
+userRouter.post("/refresh",isAuth, userController.refresh);
+
+/**
+ * @swagger
+ *  /api/auth/signout:
  *   post:
  *      summary: User Logout
  *      tags: [Auth]
+ *      requestBody:
+ *        required: true
+ *        content:
+ *          application/json:
+ *            schema:
+ *              type: object
+ *              properties:
+ *                refreshToken:
+ *                  type: string
+ *                  format: token
  *      responses:
  *          200:
  *              description: Success
@@ -92,7 +127,6 @@ userRouter.post("/signin",userController.signIn)
  *
  */
 
-userRouter.post("/signout",userController.signOut)
+userRouter.post("/signout",isAuth, userController.signOut);
 
-
-export default userRouter
+export default userRouter;

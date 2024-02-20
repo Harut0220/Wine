@@ -57,31 +57,43 @@ const UserService = {
         if (!token) {
           return { message: "User not logged" };
         }
-
-        jwt.verify(
+        const decodedToken = jwt.verify(
           refreshToken,
-          process.env.ACCESS_TOKEN,
-          async (err, { _id, email }) => {
-            if (err) console.error(err);
-
-            const deleteToken = await RefreshToken.findByIdAndDelete({
-              token: refreshToken,
-            });
-
-            const new_access_token = generateAccessToken({ _id, email });
-
-            const new_refresh_token = generateRefreshToken({ _id, email });
-
-            const newToken = await RefreshToken({
-              _id,
-              token: new_refresh_token,
-            }).save();
-
-            return newToken;
-          }
+          process.env.REFRESH_TOKEN
         );
+
+        await RefreshToken.findOneAndDelete({ token: refreshToken });
+        const newAccessToken = generateRefreshToken({
+          _id: decodedToken._id,
+          email: decodedToken.email,
+        });
+        const newRefreshToken = generateAccessToken({
+          _id: decodedToken._id,
+          email: decodedToken.email,
+        });
+        const newRefreshTokenMongoDB = new RefreshToken({
+          userId: decodedToken._id,
+          token: newRefreshToken,
+        });
+        await newRefreshTokenMongoDB.save();
+
+        return { accessToken: newAccessToken, refreshToken: newRefreshToken };
       } else {
         return { message: "not logged in" };
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  signOut: async (refreshToken) => {
+    try {
+      if (refreshToken) {
+        const token = await RefreshToken.findOneAndDelete({
+          token: refreshToken,
+        });
+        return { message: "Logout succesful" };
+      } else {
+        return { message: "Invalid Token" };
       }
     } catch (error) {
       console.error(error);

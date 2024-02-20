@@ -3,7 +3,7 @@ import Cart from "../Model/CartModel.js";
 const cartService = {
   getAll: async () => {
     try {
-      const CartProducts = await Cart.find().populate("productId");
+      const CartProducts = await Cart.find()
       return CartProducts;
     } catch (error) {
       console.error("errr");
@@ -11,9 +11,7 @@ const cartService = {
   },
   addToCart: async (id) => {
     try {
-      const cartExist = await Cart.findOne({ productId: id }).populate(
-        "productId"
-      );
+      const cartExist = await Cart.findOne({ productId: id })
 
       if (cartExist) {
         cartExist.count = cartExist.count + 1;
@@ -28,9 +26,32 @@ const cartService = {
         return newCart;
       }
     } catch (error) {
-      console.log("err");
+      console.error("err");
     }
   },
+  subToCart:async (id)=>{
+    try {
+      const cartExist = await Cart.findOne({ productId: id })
+
+      if (cartExist) {
+        cartExist.count = cartExist.count - 1;
+        if(cartExist.count===0){
+         await Cart.findOneAndDelete({productId:id})
+         return {message:"Product deleted"}
+        }
+        await cartExist.save();
+        return cartExist;
+      } else {
+        const newCart = new Cart({
+          productId: id,
+        });
+        await newCart.save();
+        return newCart;
+      }
+    } catch (error) {
+      console.error("err");
+    }
+  }
 };
 
 export default cartService;

@@ -5,9 +5,9 @@ export const options = {
   swaggerDefinition: {
     openapi: "3.0.0",
     info: {
-      title: "Santa",
+      title: "Wine",
       version: "1.0.0",
-      description: "Student Project:Secret Santa App APIs",
+      description: "Student Project:Secret Wine App APIs",
     },
     servers: [{ url: "http://localhost:5003/" }],
     components: {
@@ -70,12 +70,12 @@ export const options = {
             password: { type: "string", description: "required" },
           },
         },
-        RefreshToken:{
-          type:"object",
-          properties:{
+        RefreshToken: {
+          type: "object",
+          properties: {
             userId: { type: "string", description: "required" },
             token: { type: "string", description: "required" },
-          }
+          },
         },
         Wine: {
           type: "object",
