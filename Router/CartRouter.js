@@ -22,7 +22,7 @@ const cartRouter = Router();
  *
  */
 
-cartRouter.get("/all", cartController.getAll);
+cartRouter.get("/all",isAuth, cartController.getAll);
 
 /**
  * @swagger
@@ -50,7 +50,7 @@ cartRouter.get("/all", cartController.getAll);
  *
  */
 
-cartRouter.post("/add/:id",  cartController.addToCart);
+cartRouter.post("/add/:id",isAuth,  cartController.addToCart);
 
 /**
  * @swagger
@@ -78,6 +78,6 @@ cartRouter.post("/add/:id",  cartController.addToCart);
  *
  */
 
-cartRouter.post("/sub/:id", cartController.subToCart)
+cartRouter.post("/sub/:id",isAuth, cartController.subToCart)
 
 export default cartRouter;

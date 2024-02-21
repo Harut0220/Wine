@@ -1,4 +1,5 @@
 import Cart from "../Model/CartModel.js";
+import User from "../Model/UserModel.js";
 
 const cartService = {
   getAll: async () => {
@@ -9,9 +10,10 @@ const cartService = {
       console.error("errr");
     }
   },
-  addToCart: async (id) => {
+  addToCart: async (productId, userId) => {
     try {
-      const cartExist = await Cart.findOne({ productId: id })
+      const cartExist = await Cart.findOne({ userId: userId })
+      console.log(cartExist);
 
       if (cartExist) {
         cartExist.count = cartExist.count + 1;
@@ -19,14 +21,18 @@ const cartService = {
         await cartExist.save();
         return cartExist;
       } else {
+        let arrayId=[]
+        arrayId.push(productId)
         const newCart = new Cart({
-          productId: id,
+          products: [productId],
+          userId: userId,
+          totalCount: arrayId.length
         });
         await newCart.save();
         return newCart;
       }
     } catch (error) {
-      console.error("err");
+      console.error(error);
     }
   },
   subToCart:async (id)=>{

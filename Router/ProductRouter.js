@@ -59,7 +59,7 @@ const productRouter = Router();
  *                $ref: "#/components/schemas/Wine"
  */
 
-productRouter.get("/", productController.getAll);
+productRouter.get("/",isAuth, productController.getAll);
 
 /**
  * @swagger

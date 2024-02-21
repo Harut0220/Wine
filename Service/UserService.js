@@ -76,7 +76,7 @@ const UserService = {
           token: newRefreshToken,
         });
         await newRefreshTokenMongoDB.save();
-
+        console.log(newAccessToken);
         return { accessToken: newAccessToken, refreshToken: newRefreshToken };
       } else {
         return { message: "not logged in" };

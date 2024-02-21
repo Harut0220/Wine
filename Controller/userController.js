@@ -13,7 +13,7 @@ const userController = {
       const { refreshToken } = req.body;
 
       const token = await UserService.refresh(refreshToken);
-
+      console.log(token);
       res.status(200).send(token);
     } catch (error) {
       console.error(error);
