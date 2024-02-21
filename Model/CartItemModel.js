@@ -2,7 +2,7 @@ import { Schema, model } from "mongoose";
 
 const CartItemSchema = new Schema(
   {
-    producId:{type: Schema.Types.ObjectId,ref:"ProductModel"},
+    productId:{type: Schema.Types.ObjectId,ref:"ProductModel"},
     count:{type: Number,default: 0},
     cartId:{type:Schema.Types.ObjectId,ref:"Cart"}
   },

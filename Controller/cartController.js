@@ -24,7 +24,7 @@ const cartController = {
     try {
       const {id}=req.params 
     
-    const addedProduct = await cartService.subToCart(id);
+    const addedProduct = await cartService.subToCart(id,req.user._id);
     res.status(200).send(addedProduct);
     } catch (error) {
       res.status(500).send({ message: "Internal server error" });

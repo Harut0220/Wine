@@ -17,7 +17,7 @@ const productRouter = Router();
  * @swagger
  *  /api/product:
  *    get:
- *      summary: Wine
+ *      summary: filtered Wines
  *      tags: [Wines]
  *      parameters:
  *        - in: query
@@ -60,6 +60,34 @@ const productRouter = Router();
  */
 
 productRouter.get("/",isAuth, productController.getAll);
+
+/**
+ * @swagger
+ *  /api/product/{id}:
+ *   get:
+ *      summary: Return Wine By Id
+ *      tags: [Wines]
+ *      parameters:
+ *        - name: id
+ *          in: path
+ *          description: Return Wine By Id
+ *          required: true
+ *          schema:
+ *            type: string
+ *            format: id
+ *      security:
+ *        - bearerAuth: []
+ *      responses:
+ *          200:
+ *              description: Succes
+ *              contents:
+ *                  application/json:
+ *                      schema:
+ *                          $ref:"#/component/schemas/Wine"
+ *
+ */
+
+productRouter.get("/:id",isAuth,productController.getById)
 
 /**
  * @swagger

@@ -8,7 +8,7 @@ const cartRouter = Router();
  * @swagger
  *  /api/cart/all:
  *   get:
- *      summary: Return Boxes by Parent Categories Id
+ *      summary: All Cart
  *      tags: [Wines]
  *      security:
  *        - bearerAuth: []
@@ -28,7 +28,7 @@ cartRouter.get("/all",isAuth, cartController.getAll);
  * @swagger
  *  /api/cart/add/{id}:
  *   post:
- *      summary: Return Categories by Items id
+ *      summary: Add Product By Id
  *      tags: [Wines]
  *      parameters:
  *        - name: id
@@ -56,12 +56,12 @@ cartRouter.post("/add/:id",isAuth,  cartController.addToCart);
  * @swagger
  *  /api/cart/sub/{id}:
  *   post:
- *      summary: Return Categories by Items id
+ *      summary: Sub Product By Id
  *      tags: [Wines]
  *      parameters:
  *        - name: id
  *          in: path
- *          description: Add to Cart Wine by Id
+ *          description: Sub Product By Id
  *          required: true
  *          schema:
  *            type: string

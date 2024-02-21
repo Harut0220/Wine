@@ -9,7 +9,7 @@ export const generateAccessToken = (user) => {
 
     try {
         const token = jwt.sign(payload, process.env.ACCESS_TOKEN, {
-            expiresIn: "5m"
+            expiresIn: "45m"
         })
 
         return token
@@ -26,7 +26,7 @@ export const generateRefreshToken = (user) => {
   
     try {
       const token = jwt.sign(payload, process.env.REFRESH_TOKEN, {
-        expiresIn: "5m",
+        expiresIn: "45m",
       });
   
       return token;

@@ -1,6 +1,17 @@
 import productService from "../Service/ProductService.js";
 
 const productController = {
+  getById:async (req,res)=>{
+    try {
+      const {id}=req.params
+
+      const wineById=await productService.getById(id)
+
+      res.status(200).send(wineById)
+    } catch (error) {
+      console.error(error)
+    }
+  },
   getAll: async (req, res) => {
     try {
       const { type, brand, rating, pricemax, pricemin } = req.query;

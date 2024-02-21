@@ -1,6 +1,15 @@
 import Product from "../Model/ProductModel.js";
 
 const productService = {
+  getById: async (id)=>{
+    try {
+      const wineById=await Product.findOne({_id:id})
+
+      return wineById
+    } catch (error) {
+      console.error(error)
+    }
+  },
   getAll: async (type, brand, rating, priceMin, priceMax) => {
     
     try {
