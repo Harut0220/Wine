@@ -39,11 +39,10 @@ const cartService = {
               cartId: newCart._id,
             });
             await cartByUser.save();
-            
           }
-          return {message:"Product added successfully"}
-        }else{
-          return {message:"Product not found"}
+          return { message: "Product added successfully" };
+        } else {
+          return { message: "Product not found" };
         }
       } else {
         const idsArray = cartExist.products.find((ids) => {
@@ -59,18 +58,17 @@ const cartService = {
           searchItemCart.count = searchItemCart.count + 1;
           await searchItemCart.save();
 
-          
-          searchCart.totalCount = searchCart.totalCount+1;
+          searchCart.totalCount = searchCart.totalCount + 1;
           await searchCart.save();
 
-          return {message:"Product added successfully"}
+          return { message: "Product added successfully" };
         } else {
           const searchItem = await CartItem.findOne({ productId });
           const searchCart = await Cart.findOne({ userId });
           //ete nor product@ chka
           if (!searchItem) {
             searchCart.products.push(productId);
-            searchCart.totalCount = searchCart.totalCount+1;
+            searchCart.totalCount = searchCart.totalCount + 1;
             await searchCart.save();
 
             const newIdCartItem = new CartItem({
@@ -80,7 +78,7 @@ const cartService = {
             });
             await newIdCartItem.save();
           }
-          return {message:"Product added successfully"}
+          return { message: "Product added successfully" };
         }
       }
     } catch (error) {
@@ -89,31 +87,31 @@ const cartService = {
   },
   subToCart: async (productId, userId) => {
     try {
-      const userCart=await Cart.findOne({userId})
+      const userCart = await Cart.findOne({ userId });
 
-      if(userCart){
-        const userCart=await Cart.findOne({userId})
-        const cartItem = await CartItem.findOne({productId})
-        if(cartItem){
-           if(cartItem.count<=1){
-            const indexRemov=userCart.products.indexOf(productId)
-            userCart.products.splice(indexRemov,1)
-            await userCart.save()
-            const deleteItem=await CartItem.findOneAndDelete({productId})
+      if (userCart) {
+        const userCart = await Cart.findOne({ userId });
+        const cartItem = await CartItem.findOne({ productId });
+        if (cartItem) {
+          if (cartItem.count <=1) {
+            const indexRemov = userCart.products.indexOf(productId);
+            userCart.products.splice(indexRemov, 1);
+            await userCart.save();
+            const deleteItem = await CartItem.findOneAndDelete({ productId });
+           
+          }
+          if (userCart.totalCount <=1) {
+            const deleteUserCart = await Cart.findOneAndDelete({ userId });
             
           }
-          if(userCart.totalCount<=1){
-           const deleteUserCart=await Cart.findOneAndDelete({userId})
-            
-          }
-          userCart.totalCount=userCart.totalCount-1
-          await userCart.save()
-          cartItem.count=cartItem.count-1
-          await cartItem.save()
-         
+          userCart.totalCount = userCart.totalCount - 1;
+          await userCart.save();
+          cartItem.count = cartItem.count - 1;
+          await cartItem.save();
+          return {message:"One Product Removed"}
         }
-      }
-      
+        
+      }return {message:"Product Not Found in Cart"}
     } catch (error) {
       console.error("err");
     }

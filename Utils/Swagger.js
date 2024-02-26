@@ -9,7 +9,7 @@ export const options = {
       version: "1.0.0",
       description: "Student Project:Secret Wine App APIs",
     },
-    servers: [{ url: "http://localhost:5003/" }],
+    servers: [{ url: "http://localhost:5003", }],
     components: {
       request: {
         Wine: {

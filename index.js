@@ -29,5 +29,5 @@ app.use("/api/cart",cartRouter)
 app.use("/api/auth",userRouter)
 
 app.listen(process.env.PORT,()=>{
-    console.log(`DB Connected`);
+    console.log(`Server running at ${process.env.PORT}`);
 })
